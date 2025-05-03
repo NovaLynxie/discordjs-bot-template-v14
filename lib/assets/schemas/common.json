@@ -1,0 +1,23 @@
+{
+	"permissions": {
+		"commands": {
+			"USER": 0,
+			"ADMIN": 1,
+			"DEVELOPER": 2
+		}
+	},
+	"responses": {
+		"interactions": {
+			"errors": {
+				"autocomplete": {
+					"disabledAutocompleteInteraction": "This command's autocomplete has been disabled!",
+					"restrictedAutoCompleteInteraction": "You do not have permission to use this command!"
+				},
+				"chatcommand": {
+					"disabledChatInputCommandInteraction": "This command is currently disabled.",
+					"restrictedChatInputCommandInteraction": "You do not have permission to use this command!"
+				}
+			}
+		}
+	}
+}
