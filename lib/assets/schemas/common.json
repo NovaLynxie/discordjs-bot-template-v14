@@ -10,12 +10,12 @@
 		"interactions": {
 			"errors": {
 				"autocomplete": {
-					"disabledAutocompleteInteraction": "This command's autocomplete has been disabled!",
-					"restrictedAutoCompleteInteraction": "You do not have permission to use this command!"
+					"AutocompleteInteractionDisabledMessage": "This command's autocomplete has been disabled!",
+					"AutoCompleteInteractionRestrictedMessage": "You do not have permission to use this command!"
 				},
 				"chatcommand": {
-					"disabledChatInputCommandInteraction": "This command is currently disabled.",
-					"restrictedChatInputCommandInteraction": "You do not have permission to use this command!"
+					"ChatInputCommandInteractionDisabledMessage": "This command is currently disabled in the application!",
+					"ChatInputCommandInteractionRestrictedMessage": "You do not have permission to use this command!"
 				}
 			}
 		}
