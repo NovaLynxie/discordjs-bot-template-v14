@@ -15,4 +15,4 @@ DISCORD_TOKEN = "INSERT_TOKEN_HERE"
 
 [developer]
 # Enable debug mode. Only used to expose developer information or for debugging code. KEEP THIS SETTING OFF UNLESS REQUIRED!
-debug = false
+enableDebug = false
