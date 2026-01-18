@@ -1,0 +1,19 @@
+# Discord Bot Application Configuration
+# Config Version 1.0.0-26w4a (C) NovaLynxie 2024-2026
+
+[general]
+# Owner defined Discord User IDs
+# They can bypass user restrictions on certain commands, so set this responsibly.
+adminUserIds=[]
+# Developer access for developer only commands.
+# WARNING! User IDs placed here overrides the adminUserIds check.
+devUserIds=[]
+
+[application]
+# Bot App Token. DO NOT SHARE THIS WITH ANYONE ELSE!
+# Generally .env is used over config.toml, only set token here if you cannot set .env variables or prefer config files.
+DISCORD_TOKEN = "INSERT_TOKEN_HERE"
+
+[developer]
+# Enable debug mode. Only used to expose developer information or for debugging code. KEEP THIS SETTING OFF UNLESS REQUIRED!
+enableDebug = false

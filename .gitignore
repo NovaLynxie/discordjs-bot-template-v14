@@ -8,3 +8,7 @@ logs/*
 
 # log files
 .log
+
+# bot assets
+!lib/assets/**/schemas/*.json
+!lib/assets/**/templates/default_config.toml
