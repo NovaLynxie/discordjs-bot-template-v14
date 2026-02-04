@@ -1,5 +1,5 @@
-# Simple Discord Bot Framework
-A simple discord bot framework that is flexible and built to your needs. Built to run on Discord.JS v14.
+# Simple Discord Bot Template
+A simple discord bot template that is flexible and built to your needs with minimal dependencies. Built to run on Discord.js v14.
 ## Dependencies
 - NodeJS v16 or above
 - Any code editor of your choice (or text file editor if you prefer that)
