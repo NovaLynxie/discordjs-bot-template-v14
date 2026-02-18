@@ -1,6 +1,6 @@
 {
   "name": "djs-bot-template",
-  "version": "1.2.0",
+  "version": "1.2.0-alpha.26w8a",
   "description": "A simple discord.js bot template written in nodejs",
   "main": "lib/bot.js",
   "directories": {
