@@ -6,6 +6,10 @@ logs/*
 *.env
 *.toml
 
+# databases
+*.db
+*.sqlite
+
 # log files
 .log
 
