@@ -1,7 +1,7 @@
 # Simple Discord Bot Template
 A simple discord bot template that is flexible and built to your needs with minimal dependencies. Built to run on Discord.js v14.
 ## Dependencies
-- NodeJS v16 or above
+- NodeJS v20 or above
 - Any code editor of your choice (or text file editor if you prefer that)
 
 ## Getting Started
