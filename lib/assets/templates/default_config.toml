@@ -9,7 +9,11 @@ adminUserIds=[]
 [application]
 # Bot App Token. DO NOT SHARE THIS WITH ANYONE ELSE!
 # Generally .env is used over config.toml, only set token here if you cannot set .env variables or prefer config files.
-DISCORD_TOKEN = "INSERT_TOKEN_HERE"
+# 
+DISCORD_TOKEN = "DISCORD_TOKEN"
+# Client ID for actions that run outside application such as deploying commands
+# will use process.env.CLIENT_ID if set, else will fallback to this value
+CLIENT_ID = "APP_CLIENT_ID"
 
 [developer]
 # Enable debug mode. Only used to expose developer information or for debugging code. KEEP THIS SETTING OFF UNLESS REQUIRED!
