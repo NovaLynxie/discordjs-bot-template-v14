@@ -3,7 +3,7 @@ import { Events } from "discord.js";
 
 const logger = customLogger("events");
 
-module.exports = {
+export default {
     name: Events.ClientReady,
     once: true,
     async execute(client: any) {
