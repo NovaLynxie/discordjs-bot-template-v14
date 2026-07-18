@@ -1,5 +1,5 @@
 import { customLogger } from "./logger";
-import { version as appVersion } from '../../../package.json';
+import { version as appVersion } from '../../package.json';
 import { version as djsVersion } from 'discord.js';
 //import { generateDependencyReport } from '@discordjs/voice';
 import fs from 'node:fs';

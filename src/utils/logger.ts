@@ -1,6 +1,6 @@
 import { createLogger, addColors, format, transports } from "winston";
 import 'winston-daily-rotate-file';
-import { name } from '../../../package.json';
+import { name } from '../../package.json';
 // logger constants
 const parentDir = "./logs";
 const timestamp = "YYYY-MM-DD HH:mm:ss";
