@@ -1,15 +1,17 @@
 import { loadConfig } from "../utils/config";
 import { customLogger } from "../utils/logger";
 import { permissions, responses } from "../assets/schemas/common.json";
-import { Collection, Events, time } from "discord.js";
+import { Collection, Events, MessageFlags, time } from "discord.js";
+import { commands } from "../bot";
 
 const logger = customLogger("events");
 const config = loadConfig();
 export default {
     name: Events.InteractionCreate,
+    
     async execute(interaction: any) {
         const { client, commandName, guild, member, user } = interaction;
-        const { cooldowns } = client.commands;
+        const { cooldowns } = commands;
         // interaction create event functions
         function checkPermsLevel(command: any) {
             switch (command.permsLevel) {
@@ -27,13 +29,13 @@ export default {
         };
         // check if interaction is an autocomplete or chat input command
         if (interaction.isAutocomplete() || interaction.isChatInputCommand()) {
-            const command = client.commands.cache.get(commandName);
+            const command: any = commands.cache.get(commandName);
             if (!command) {
                 logger.error(`InteractionError: Unknown command "${commandName}" received!`);
                 logger.debug(`Unknown interaction "${commandName}" was triggered by user "${user.username}"!`);
                 await interaction.reply({
                     content: `Unknown command "${commandName}"!`,
-                    ephemeral: true
+                    flags: MessageFlags.Ephemeral
                 });
             };
             logger.debug(`Received user interaction ${commandName} from ${(guild) ? `Guild: "${guild.name}" => Member: "${member.user.username}"` : `User: "${user.username}"`}`);
@@ -52,7 +54,7 @@ export default {
             };
             if (interaction.isChatInputCommand()) {
                 if (!cooldowns.has(command.data.name)) cooldowns.set(command.data.name, new Collection());
-                const timestamps = cooldowns.get(command.data.name);
+                const timestamps: any = cooldowns.get(command.data.name);
                 const cooldownDuration = (command?.cooldown ?? 1) * 1000;
                 const systemTime = Date.now(); // fetch current system time
                 if (timestamps.has(user.id)) {
@@ -62,7 +64,7 @@ export default {
                         logger.warn(`Detected ${user.username} trying to use "${command.data.name}" too quickly!`);
                         return interaction.reply({
                             content: `${member ?? user}, this command is in cooldown! Try again in ${time(cooldownExpiryTimestamp, "R")}`,
-                            ephemeral: true
+                            flags: MessageFlags.Ephemeral
                         });
                     }
                 } else {
@@ -72,13 +74,13 @@ export default {
                 if (!command?.enabled) {
                     return interaction.reply({
                         content: "This command is currently disabled. Please contact my administrator for more information.",
-                        ephemeral: true
+                        flags: MessageFlags.Ephemeral
                     });
                 };
                 if (command?.restricted && !checkPermsLevel(command)) {
                     return interaction.reply({
                         content: "You do not have permission to use this command!",
-                        ephemeral: true
+                        flags: MessageFlags.Ephemeral
                     });
                 };
                 try {
@@ -89,7 +91,7 @@ export default {
                     logger.debug(err.stack);
                     const response = {
                         content: "Something went wrong while executing this command!",
-                        ephemeral: true,
+                        flags: MessageFlags.Ephemeral
                     };
                     if (interaction.replied || interaction.deferred) {
                         await interaction.followUp(response);
