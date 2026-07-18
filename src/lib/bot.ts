@@ -12,7 +12,7 @@ import path from "node:path";
 // initialize logger
 const logger = customLogger("main");
 // initialize "client" instance
-export const client = new Client({
+const client = new Client({
     intents: [
         GatewayIntentBits.DirectMessages,
         GatewayIntentBits.Guilds,
