@@ -1,7 +1,12 @@
-import { customLogger } from './utils/logger';
-import { ActivityType, Client, Collection, GatewayIntentBits } from "discord.js";
+import { customLogger } from "./utils/logger";
+import {
+    ActivityType,
+    Client,
+    Collection,
+    GatewayIntentBits,
+} from "discord.js";
 //const config = require("./utils/config").loadConfig(); // call loadConfig() to return config object.
-import { generateCrashReport } from './utils/reports';
+import { generateCrashReport } from "./utils/reports";
 import { readdirSync } from "node:fs";
 import path from "node:path";
 // initialize logger
@@ -10,19 +15,58 @@ const logger = customLogger("main");
 export const client = new Client({
     intents: [
         GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.Guilds
+        GatewayIntentBits.Guilds,
         // ADD REQUIRED INTENTS HERE
     ],
     presence: {
         activities: [
-            { name: "custom_status.app_init", state: "Starting up...", type: ActivityType.Custom }
+            {
+                name: "custom_status.app_init",
+                state: "Starting up...",
+                type: ActivityType.Custom,
+            },
         ],
-        status: "dnd"
-    }
+        status: "dnd",
+    },
 });
+// client commands
+export const commands = {
+    cache: new Collection(),
+    cooldowns: new Collection()
+};
+// client command loader
+const cmdRootDir = path.join(__dirname, "commands");
+for (const cmdSubDir of readdirSync(cmdRootDir)) {
+    const cmdFullPath = path.join(cmdRootDir, cmdSubDir);
+    const cmdFiles = readdirSync(cmdFullPath).filter((file) => file.endsWith(".js"));
+    for (const file of cmdFiles) {
+        const cmdFilePath = path.join(cmdFullPath, file);
+        try {
+            const command = require(cmdFilePath);
+            if ("data" in command && "execute" in command) {
+                command.path = cmdFilePath;
+                commands.cache.set(command.data.name, command);
+                logger.debug(`Loaded command.${command.data.name} from file "${command.path}"`);
+            } else {
+                const reason = () => {
+                    if (!command.data) return new ReferenceError(`Missing or undefined "data" field property!`);
+                    if (!command.execute) return new ReferenceError(`Missing or undefined "execute" function callback!`);
+                    return new Error(`Unknown error while checking required parameters!`);
+                };
+                throw reason;
+            }
+        } catch (err: any) {
+            logger.error(`Failed to load command file "${cmdFilePath}"!`);
+            logger.error(`CommandLoaderError: ${err.message}`);
+            logger.debug(err.stack);
+        };
+    };
+};
 // client event handler
 const eventsRootDir = path.join(__dirname, "events");
-for (const file of readdirSync(eventsRootDir).filter((file) => file.endsWith(".js"))) {
+for (const file of readdirSync(eventsRootDir).filter((file) =>
+    file.endsWith(".js"),
+)) {
     const eventFilePath = path.resolve(`${eventsRootDir}/${file}`);
     try {
         const event = require(eventFilePath);
@@ -32,14 +76,16 @@ for (const file of readdirSync(eventsRootDir).filter((file) => file.endsWith(".j
         } else {
             client.on(event.name, (...args) => event.execute(...args));
         }
-    } catch(err: any) {
+    } catch (err: any) {
         logger.error(`EventLoaderError: ${err.message}`);
         logger.debug(err.stack);
     }
 }
 // process event handlers
 process.on("SIGINT", () => {
-    logger.warn("Application termination signal received (Ctrl+C)! Stopping processes now.");
+    logger.warn(
+        "Application termination signal received (Ctrl+C)! Stopping processes now.",
+    );
     process.exit(); // gracefully shutdown application here
 });
 process.on("exit", (code) => {
@@ -79,7 +125,7 @@ client
             logger.error("Failed to connect. Check logs for errors.");
             if (reason) logger.error(reason); // only log reason if returned
             process.exit(-1); // bot should stop if login promise rejects
-        }
+        },
     )
     .catch((err) => {
         logger.error(err.message);
