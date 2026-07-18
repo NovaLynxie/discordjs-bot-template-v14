@@ -1,4 +1,4 @@
-const logger = require('./logger')();
+const logger = require('./logger')("report");
 import { version as appVersion } from '../../../package.json';
 const djsVersion = require('discord.js').version;
 //const { generateDependencyReport } = require('@discordjs/voice');
