@@ -2,15 +2,15 @@
   "name": "djs-bot-template",
   "version": "1.2.1",
   "description": "A simple discord.js bot template written in nodejs",
-  "main": "lib/bot.js",
+  "main": "dist/lib/bot.js",
   "directories": {
-    "lib": "lib"
+    "dist": "dist"
   },
   "scripts": {
     "build": "tsc",
     "dev": "nodemon .",
     "start": "node .",
-    "setup": "node ./lib/utils/setup.js"
+    "setup": "node ./dist/lib/utils/setup.js"
   },
   "keywords": [
     "bot",
