@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, MessageFlags, AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
-import { commands } from '../../commands';
+import { commands } from '../../bot';
 
-module.exports = {
+exports = {
     cooldown: 5,
     data: new SlashCommandBuilder()
         .setName("reload")
@@ -20,15 +20,16 @@ module.exports = {
     async autocomplete(interaction: AutocompleteInteraction) {
         const { client, options } = interaction;
         const focusedValue = options.getFocused();
-        const filteredCommands = commands.cache.filter((cmd: { data: { name: string; }; }) => cmd.data.name.startsWith(focusedValue));
+        //const filteredCommands = commands.cache.filter((cmd: { data: { name: string }; }) => cmd.data.name.startsWith(focusedValue));
+        const filteredCommands = commands.cache.filter((cmd: any) => cmd?.data.name.startsWith(focusedValue));
         await interaction.respond(
-            filteredCommands.map((cmd: { data: { name: any; }; }) => ({ name: cmd.data.name, value: cmd.data.name })).slice(0, 25)
+            filteredCommands.map((cmd: any) => ({ name: cmd.data.name, value: cmd.data.name })).slice(0, 25)
         );
     },
     async execute(interaction: ChatInputCommandInteraction) {
         const { client, options } = interaction;
         const commandName = interaction.options.getString("command");
-        const command = commands.cache.get(commandName);
+        const command: any = commands.cache.get(commandName);
         if (command) {
             delete require.cache[require.resolve(command.path)];
             try {
