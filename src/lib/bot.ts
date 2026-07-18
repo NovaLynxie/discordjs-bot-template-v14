@@ -5,7 +5,7 @@ import {
     Collection,
     GatewayIntentBits,
 } from "discord.js";
-//const config = require("./utils/config").loadConfig(); // call loadConfig() to return config object.
+const config = require("./utils/config").loadConfig(); // call loadConfig() to return config object.
 import { generateCrashReport } from "./utils/reports";
 import { readdirSync } from "node:fs";
 import path from "node:path";
