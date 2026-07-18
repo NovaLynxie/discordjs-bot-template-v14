@@ -42,18 +42,15 @@ for (const cmdSubDir of readdirSync(cmdRootDir)) {
     for (const file of cmdFiles) {
         const cmdFilePath = path.join(cmdFullPath, file);
         try {
-            const command = require(cmdFilePath);
+            const command = require(cmdFilePath).default;
             if ("data" in command && "execute" in command) {
                 command.path = cmdFilePath;
                 commands.cache.set(command.data.name, command);
                 logger.debug(`Loaded command.${command.data.name} from file "${command.path}"`);
             } else {
-                const reason = () => {
-                    if (!command.data) return new ReferenceError(`Missing or undefined "data" field property!`);
-                    if (!command.execute) return new ReferenceError(`Missing or undefined "execute" function callback!`);
-                    return new Error(`Unknown error while checking required parameters!`);
-                };
-                throw reason;
+                if (!command.data) throw new ReferenceError(`Missing or undefined "data" field property!`);
+                if (!command.execute) throw new ReferenceError(`Missing or undefined "execute" function callback!`);
+                throw new Error(`Unknown error while checking required parameters!`);
             }
         } catch (err: any) {
             logger.error(`Failed to load command file "${cmdFilePath}"!`);
@@ -69,7 +66,7 @@ for (const file of readdirSync(eventsRootDir).filter((file) =>
 )) {
     const eventFilePath = path.resolve(`${eventsRootDir}/${file}`);
     try {
-        const event = require(eventFilePath);
+        const event = require(eventFilePath).default;
         //if (event.name === Events.Debug && config.developer.enableDebug === false) continue;
         if (event.once) {
             client.once(event.name, (...args) => event.execute(...args));
