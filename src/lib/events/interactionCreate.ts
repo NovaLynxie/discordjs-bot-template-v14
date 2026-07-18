@@ -1,9 +1,11 @@
-const logger = require("../utils/logger")("interaction");
-const config = require("../utils/config").loadConfig();
+import { loadConfig } from "../utils/config";
+import { customLogger } from "../utils/logger";
 import { permissions, responses } from "../assets/schemas/common.json";
 import { Collection, Events, time } from "discord.js";
 
-module.exports = {
+const logger = customLogger("interaction");
+const config = loadConfig();
+exports = {
     name: Events.InteractionCreate,
     async execute(interaction: any) {
         const { client, commandName, guild, member, user } = interaction;

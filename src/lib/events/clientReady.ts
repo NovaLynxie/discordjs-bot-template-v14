@@ -1,9 +1,10 @@
-import { BaseInteraction, Interaction } from "discord.js";
+import { Collection, Events, time } from "discord.js";
+import { customLogger } from "../utils/logger";
+import { loadConfig } from "../utils/config";
+import { permissions, responses } from "../assets/schemas/common.json";
 
-const logger = require("../utils/logger")("interaction");
-const config = require("../utils/config").loadConfig();
-const { permissions, responses } = require("../assets/schemas/common.json");
-const { Collection, Events, time } = require("discord.js");
+const logger = customLogger("interaction");
+const config = loadConfig();
 
 module.exports = {
     name: Events.InteractionCreate,
