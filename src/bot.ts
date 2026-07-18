@@ -83,7 +83,7 @@ process.on("SIGINT", () => {
     logger.warn(
         "Application termination signal received (Ctrl+C)! Stopping processes now.",
     );
-    process.exit(); // gracefully shutdown application here
+    process.exit(0); // gracefully shutdown application here
 });
 process.on("exit", (code) => {
     logger.info("Stopping bot application...");
