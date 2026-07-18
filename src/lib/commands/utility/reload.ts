@@ -18,7 +18,7 @@ exports = {
     restricted: true,
     // slash command methods
     async autocomplete(interaction: AutocompleteInteraction) {
-        const { client, options } = interaction;
+        const { options } = interaction;
         const focusedValue = options.getFocused();
         //const filteredCommands = commands.cache.filter((cmd: { data: { name: string }; }) => cmd.data.name.startsWith(focusedValue));
         const filteredCommands = commands.cache.filter((cmd: any) => cmd?.data.name.startsWith(focusedValue));
@@ -27,8 +27,8 @@ exports = {
         );
     },
     async execute(interaction: ChatInputCommandInteraction) {
-        const { client, options } = interaction;
-        const commandName = interaction.options.getString("command");
+        const { options } = interaction;
+        const commandName = options.getString("command");
         const command: any = commands.cache.get(commandName);
         if (command) {
             delete require.cache[require.resolve(command.path)];

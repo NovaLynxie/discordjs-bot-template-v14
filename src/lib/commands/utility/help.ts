@@ -17,7 +17,7 @@ module.exports = {
                 .setDescription("View help for specific command.")
                 .addStringOption(option => 
                     option
-                        .setName("commandName")
+                        .setName("command_name")
                         .setDescription("Specify command to display help for")
                         .setAutocomplete(true)
                         .setRequired(true)
@@ -37,8 +37,8 @@ module.exports = {
         );
     },
     async execute(interaction: ChatInputCommandInteraction) {
-        const { client, options } = interaction;
-        const commandName = options.getString("commandName");
+        const { options } = interaction;
+        const commandName = options.getString("command_name");
         const subcommand = options.getSubcommand();
         const helpEmbed = new EmbedBuilder();
         if (commandName) {
