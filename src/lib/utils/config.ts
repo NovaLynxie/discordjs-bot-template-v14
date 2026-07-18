@@ -2,12 +2,13 @@ require("dotenv").config({
     path: (process.env?.NODE_ENV) ? `.env.${process.env?.NODE_ENV}` : '.env',
     quiet: true
 });
-const logger = require("./logger")("config");
-const { copyFileSync, existsSync, readFileSync } = require("node:fs");
-const toml = require("toml");
+import { customLogger } from "./logger";
+import { copyFileSync, existsSync, readFileSync } from "node:fs";
+import toml from "toml";
+const logger = customLogger("config");
 // config module code
-let config: any; // defaults to empty object if no config data returned
-function loadConfig() {
+export let config: any; // defaults to empty object if no config data returned
+export function loadConfig() {
     try {
         if (existsSync("./config.toml")) {
             config = toml.parse(readFileSync("./config.toml", "utf-8"));
@@ -27,5 +28,3 @@ function loadConfig() {
         process.exit(-1);
     };
 };
-// export config module namespaces
-module.exports = { ...config, loadConfig };
