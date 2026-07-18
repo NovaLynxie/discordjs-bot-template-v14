@@ -15,5 +15,5 @@ logs/*
 .log
 
 # bot assets folders - do not ignore specific important files
-!lib/assets/**/schemas/*.json
-!lib/assets/**/templates/default_config.toml
+!src/lib/assets/**/schemas/*.json
+!src/lib/assets/**/templates/default_config.toml
