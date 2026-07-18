@@ -1,7 +1,7 @@
 const logger = require("../utils/logger")("interaction");
 const config = require("../utils/config").loadConfig();
-const { permissions, responses } = require("../assets/schemas/common.json");
-const { Collection, Events, time } = require("discord.js");
+import { permissions, responses } from "../assets/schemas/common.json";
+import { Collection, Events, time } from "discord.js";
 
 module.exports = {
     name: Events.InteractionCreate,
