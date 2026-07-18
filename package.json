@@ -19,7 +19,7 @@
     "framework"
   ],
   "author": "NovaLynxie",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "common-tags": "^1.8.2",
     "discord.js": "^14.26.5",
@@ -29,11 +29,15 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/common-tags": "^1.8.4",
     "@types/node": "^26.1.1",
-    "eslint": "^9.39.5",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
+    "jiti": "^2.7.0",
     "nodemon": "^3.1.14",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "typescript-eslint": "^8.64.0"
   },
   "engines": {
     "node": ">=20.12.0"
