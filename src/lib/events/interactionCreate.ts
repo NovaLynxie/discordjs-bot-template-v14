@@ -3,9 +3,9 @@ import { customLogger } from "../utils/logger";
 import { permissions, responses } from "../assets/schemas/common.json";
 import { Collection, Events, time } from "discord.js";
 
-const logger = customLogger("interaction");
+const logger = customLogger("events");
 const config = loadConfig();
-exports = {
+export default {
     name: Events.InteractionCreate,
     async execute(interaction: any) {
         const { client, commandName, guild, member, user } = interaction;
