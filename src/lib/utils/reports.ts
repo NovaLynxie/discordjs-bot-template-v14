@@ -20,7 +20,7 @@ function generateTimestamp() {
     logdate = `${day}-${month}-${year}`;
     return `${logdate}_${logtime}`;
 };
-function generateCrashReport(error: any) {
+export function generateCrashReport(error: any) {
     try {
         fs.accessSync('./logs/crash-reports/', fs.constants.F_OK);
         if (!fs.existsSync('./logs/crash-reports/')) {
@@ -61,4 +61,3 @@ function generateCrashReport(error: any) {
         };
     });
 };
-module.exports = { generateCrashReport }; // export crashReportHandler function as module
