@@ -1,8 +1,9 @@
-const logger = require('./logger')("report");
+import { customLogger } from "./logger";
 import { version as appVersion } from '../../../package.json';
 import { version as djsVersion } from 'discord.js';
 //import { generateDependencyReport } from '@discordjs/voice';
 import fs from 'node:fs';
+const logger = customLogger("reports");
 // crash report handler functions
 function generateTimestamp() {
     const date = new Date();
