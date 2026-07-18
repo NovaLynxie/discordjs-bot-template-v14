@@ -37,41 +37,39 @@ export default {
         );
     },
     async execute(interaction: ChatInputCommandInteraction) {
-        const { options } = interaction;
-        const commandName = options.getString("command_name");
+        const { client, options } = interaction;
         const subcommand = options.getSubcommand();
         const helpEmbed = new EmbedBuilder();
-        if (commandName) {
-            const command:any = commands.cache.get(commandName);
-            if (!command) {
-                helpEmbed.setDescription(`Unknown command "${inlineCode(commandName)}"!`);
-            } else {
-                helpEmbed
-                    .setTitle(`Command: ${inlineCode(command.data.name)}`)
-                    .setDescription(command.data.description ?? "No description available!")
-                    .setFields(
-                        { name: "Cooldown", value: `${command.cooldown ?? 0} seconds`, inline: true },
-                        { name: "Permission Level", value: command.permsLevel ?? "0 (everyone)", inline: true }
-                    );
-                if (command.data.options && command.data.options.length > 0) {
-                    const optionsDescription = command.data.options.map((option: any) => {
-                        return `${inlineCode(option.name)}: ${option.description ?? "No description available!"}`;
-                    }).join("\n");
-                    helpEmbed.addFields({ name: "Options", value: optionsDescription });
-                };
-            };
-        } else if (subcommand) {
-            switch (subcommand) {
-                case "list":
+        switch (subcommand) {
+            case "command":
+                const commandName: string = options.getString("command_name", true);
+                const command: any = commands.cache.get(commandName);
+                if (!command) {
+                    helpEmbed.setDescription(`Unknown command "${inlineCode(commandName)}"!`);
+                } else {
                     helpEmbed
-                        .setDescription(stripIndents`
-                            Available Commands (${commands.cache.size}):
-                            ${commands.cache.map((command: any) => `- ${command.data.name}`).join("\n")}
-                        `);
-                    break;
-                default:
-                    // do nothing
-            };
+                        .setTitle(`Command: ${inlineCode(command.data.name)}`)
+                        .setDescription(command.data.description ?? "No description available!")
+                        .setFields(
+                            { name: "Cooldown", value: `${command.cooldown ?? 0} seconds`, inline: true },
+                            { name: "Permission Level", value: command.permsLevel ?? "0 (everyone)", inline: true }
+                        );
+                    if (command.data.options && command.data.options.length > 0) {
+                        const optionsDescription = command.data.options.map((option: { name: string, description: string }) => {
+                            return `${inlineCode(option.name)}: ${option.description ?? "No description available!"}`;
+                        }).join("\n");
+                        helpEmbed.addFields({ name: "Options", value: optionsDescription });
+                    };
+                };
+                break;
+            case "list":
+                helpEmbed.setDescription(stripIndents`
+                    Available Commands (${commands.cache.size}):
+                    ${commands.cache.map((command: any) => `- ${command.data.name}`).join("\n")}
+                `);
+                break;
+            default:
+                // do nothing
         };
         // respond the user with help embed
         await interaction.reply({
