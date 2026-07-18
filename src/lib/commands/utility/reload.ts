@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, MessageFlags, AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import { commands } from '../../bot';
 
-exports = {
+export default {
     cooldown: 5,
     data: new SlashCommandBuilder()
         .setName("reload")

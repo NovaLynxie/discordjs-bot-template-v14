@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { stripIndents } from "common-tags";
-exports = {
+
+export default {
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("Replies with 'Pong' and response time."),    

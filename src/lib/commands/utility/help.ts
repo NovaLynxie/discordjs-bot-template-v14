@@ -2,7 +2,7 @@ import { SlashCommandBuilder, EmbedBuilder, MessageFlags, inlineCode, Autocomple
 import { stripIndents } from "common-tags";
 import { commands } from "../../bot";
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("help")
         .setDescription("Get help for commands!")
