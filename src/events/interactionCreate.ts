@@ -1,14 +1,13 @@
 import { loadConfig } from "../utils/config";
 import { customLogger } from "../utils/logger";
 import { permissions, responses } from "../assets/schemas/common.json";
-import { Collection, Events, MessageFlags, time } from "discord.js";
+import { AutocompleteInteraction, BaseInteraction, ChatInputCommandInteraction, Collection, Events, Interaction, MessageFlags, time } from "discord.js";
 import { commands } from "../bot";
 
 const logger = customLogger("events");
 const config = loadConfig();
 export default {
     name: Events.InteractionCreate,
-    
     async execute(interaction: any) {
         const { client, commandName, guild, member, user } = interaction;
         const { cooldowns } = commands;
