@@ -36,27 +36,24 @@ export const commands = {
 };
 // client command loader
 const cmdRootDir = path.join(__dirname, "commands");
-for (const cmdSubDir of readdirSync(cmdRootDir)) {
-    const cmdFullPath = path.join(cmdRootDir, cmdSubDir);
-    const cmdFiles = readdirSync(cmdFullPath).filter((file) => file.endsWith(".js"));
-    for (const file of cmdFiles) {
-        const cmdFilePath = path.join(cmdFullPath, file);
-        try {
-            const command = require(cmdFilePath).default;
-            if ("data" in command && "execute" in command) {
-                command.path = cmdFilePath;
-                commands.cache.set(command.data.name, command);
-                logger.debug(`Loaded command.${command.data.name} from file "${command.path}"`);
-            } else {
-                if (!command.data) throw new ReferenceError(`Missing or undefined "data" field property!`);
-                if (!command.execute) throw new ReferenceError(`Missing or undefined "execute" function callback!`);
-                throw new Error(`Unknown error while checking required parameters!`);
-            }
-        } catch (err: any) {
-            logger.error(`Failed to load command file "${cmdFilePath}"!`);
-            logger.error(`CommandLoaderError: ${err.message}`);
-            logger.debug(err.stack);
-        };
+for (const cmdFilePath of readdirSync(cmdRootDir, { recursive: true }).filter(file => (typeof file === "string") ? file.endsWith(".js") : null)) {
+    if (typeof cmdFilePath !== "string") continue;
+    const cmdFullPath = path.join(cmdRootDir, cmdFilePath);
+    try {
+        const command = require(cmdFullPath).default;
+        if ("data" in command && "execute" in command) {
+            command.path = cmdFullPath;
+            commands.cache.set(command.data.name, command);
+            logger.debug(`Loaded command.${command.data.name} from file "${command.path}"`);
+        } else {
+            if (!command.data) throw new ReferenceError(`Missing or undefined "data" field property!`);
+            if (!command.execute) throw new ReferenceError(`Missing or undefined "execute" function callback!`);
+            throw new Error(`Unknown error while checking required parameters!`);
+        }
+    } catch (err: any) {
+        logger.error(`Failed to load command file "${cmdFilePath}"!`);
+        logger.error(`CommandLoaderError: ${err.message}`);
+        logger.debug(err.stack);
     };
 };
 // client event handler
