@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "nodemon .",
+    "lint": "eslint .",
     "start": "node .",
     "setup": "node ./lib/utils/setup.js"
   },
